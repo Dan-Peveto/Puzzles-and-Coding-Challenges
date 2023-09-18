@@ -1,0 +1,28 @@
+//function to assign decks
+function getDeck(player1, player2, deckArr) {
+  let deck1 = deckArr[randomNum(4)];
+  let deck2 = '';
+  let remainingDecks = [];
+  for (var i = 0; i < deckArr.length; i++) {
+    if (deckArr[i] !== deck1) {
+      remainingDecks.push(deckArr[i]);
+    }
+  }
+  deck2 = remainingDecks[randomNum(3)];
+  return (player1 +": " + deck1 + ' VS ' + player2 + ": " + deck2);
+}
+
+//Function for random number  
+function randomNum(num) {
+  return Math.floor(Math.random() * num);
+}
+  //test cases
+let decks = ['Vampire Deck', 'Blue and White Deck', 'Green and Red Deck', 'All White Deck']
+
+let player1Name =  prompt(`Enter First Player's Name: `);
+console.clear()
+let player2Name = prompt(`Enter Second Player's Name: `)
+console.clear()
+let letsPlay = getDeck(player1Name, player2Name, decks);
+console.log(letsPlay);
+
