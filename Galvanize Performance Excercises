@@ -1,0 +1,275 @@
+/*
+Flip every pair of characters in a string.
+
+Example:
+var input = 'check out how interesting this problem is, it\'s insanely interesting!';
+var output = flipPairs(input);
+console.log(output); // --> hcce kuo toh wnietertsni ghtsip orlbmei ,si 't sniasenyli tnreseitgn!
+WNINFPEVCG
+*/
+
+//function flips each pair of characters in a string
+function flipper(string) {
+  // create return string
+  let flippedChar = '';
+  // iterate over input by 2
+  for (var i = 0; i < string.length; i+=2) {
+    // if last character is undefined
+    if (string[i+1] === undefined) {
+      // add last character
+      flippedChar += string[i];
+      // break; 
+      break;
+    } 
+    // add 2nd character
+    flippedChar += string[i+1];
+    // add first character
+    flippedChar += string[i];
+  }
+  // return string
+  return flippedChar
+}
+
+//assertion statement
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed') 
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+
+//test Cases
+let testString_1 = 'check out how interesting this problem is, it\'s insanely interesting!';
+let expected_1 = "hcce kuo toh wnietertsni ghtsip orlbmei ,si 't sniasenyli tnreseitgn!";
+let actual_1 = flipper(testString_1);
+assertEquals(actual_1, expected_1, 'flips every pair of characters in input string');
+
+let testString_2 = 'abcdef';
+let expected_2 = 'badcfe';
+let actual_2 = flipper(testString_2);
+assertEquals(actual_2, expected_2, 'flips every pair of characters in input string');
+
+////////////////////////////////////////////////////////////////////////////////////
+
+/* 
+Flip every chunk of n characters in a string, where n is any positive integer greater than 1.
+
+Example:
+var input = 'a short example';
+var output = flipEveryNChars(input, 5);
+console.log(output); // --> ohs axe trelpma
+
+Breaking this example down piece by piece:
+'a sho' -> 'ohs a'
+'rt ex' -> 'xe tr'
+'ample' -> 'elpma'
+
+-> 'ohs axe trelpma'
+*/
+
+// FUNCTION flips every chunk of n characters in a string, where n is any positive integer greater than 1.
+function bigFlipper(string, n) {
+  // create return string
+  let flipped = '';
+  // split input string into characters;
+  let currentArr = string.split('');
+  // iterate over characters by n
+  for (var i = 0; i < currentArr.length; i+=n) {
+    // slice array from current position to current position plus n
+    let slicedArr = currentArr.slice(i, i+n);
+    // reverse
+    let reversedArr = slicedArr.reverse();
+    // join
+    let joinedArr = reversedArr.join('');
+    // add to return string
+    flipped += joinedArr;
+  // return return string 
+  }
+  return flipped;
+}
+
+// ASSERTION
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed');
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+
+// testCase
+let testString_1 = 'a short example';
+let expected_1 = 'ohs axe trelpma';
+let actual_1 = bigFlipper(testString_1, 5);
+assertEquals(actual_1, expected_1, 'Flip every chunk of n characters in a string, where n is any positive integer greater than 1');
+
+let testString_2 = 'qwerasdfzxcv';
+let expected_2 = 'rewqfdsavcxz';
+let actual_2 = bigFlipper(testString_2, 4);
+assertEquals(actual_2, expected_2, 'Flip every chunk of n characters in a string, where n is any positive integer greater than 1')
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+Given a string of even and odd numbers, find which is the sole even number or the sole odd number.
+
+The return value should be 1-indexed, not 0-indexed.
+
+Examples :
+detectOutlierValue("2 4 7 8 10"); // => 3 - Third number is odd, while the rest of the numbers are even
+detectOutlierValue("1 10 1 1");  //=> 2 - Second number is even, while the rest of the numbers are odd
+*/
+
+// function return which position (indexed to 1 not 0) of even/odd outlier;
+function outlier(input) {
+  // convert string into num array
+  let strArr = input.split('');
+  let numArr = [];
+  for (var i = 0; i < strArr.length; i++) {
+    if (strArr[i] !== ' ') {
+      numArr.push(Number(strArr[i]));
+    }
+  }
+  // segregate even and odd numbers into seperate arrays
+  let evenArr = [];
+  let oddArr = [];
+  for (var j = 0; j < numArr.length; j++) {
+    if (numArr[j] % 2 == 0) {
+      evenArr.push(numArr[j]);
+    } else {
+      oddArr.push(numArr[j]);
+    }
+  }
+  // whichever array contains length of 1 becomes key
+  let outlier = 0;
+  if (evenArr.length === 1) {
+    outlier += evenArr[0]
+  } else {
+    outlier += oddArr[0]
+  }
+  // find position of key
+  for (var z = 0; z < numArr.length; z++) {
+    if (numArr[z] === outlier) {
+      return z+1;
+    }
+  }
+}
+
+//assertion
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed')
+  } else {
+    console.log(`FAILED [ ${testName} ], Expected "${expected}", but got "${actual}"`);
+  }
+}
+
+//test cases
+let input_1 = "2 4 5 6"
+let actual_1 = outlier(input_1);
+assertEquals(actual_1, 3, 'returns position of outlier number');
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+You will be given an array that contains two strings. Your job is to create a function that will take those two strings and transpose them, so that the strings go from top to bottom instead of left to right.
+
+e.g. transposeTwoStrings(['Hello','World']);
+
+should return:
+H W  
+e o  
+l r  
+l l  
+o d
+// "\n" (with quotation marks) is the how you get a new line
+*/
+
+function transposeTwoStrings(inputArr) {
+  // create first alias for first element of inputArr
+  let firstWord = inputArr[0];
+  // create alias for second element of inputArr
+  let secondWord = inputArr[1];
+  // create answer string
+  let tranStr = '';
+  // create longest string
+  let longestStr = '';
+  let ShortestStr = '';
+  // determine which string is longest with if statement
+  if (firstWord.length >= secondWord.length) {
+    longestStr = inputArr[0];
+    shortestStr = inputArr[1];
+  } else {
+    longestStr = inputArr[1];
+    shortestStr = inputArr[0];
+  }
+  // iterate of longest string
+  for (var i = 0; i < longestStr.length; i++) {
+    // create first char element
+    let firstChar = longestStr[i];
+    // create second char element
+    let secondChar = shortestStr[i] || ' ';
+    // add to return string
+    tranStr = tranStr += firstChar + ' ' + secondChar + "\n";
+    // seperate lines with "\n" 
+  }
+  // return answer string
+  return tranStr
+}
+console.log(transposeTwoStrings(['Hello','World']));
+console.log("\n");
+console.log(transposeTwoStrings(['Hellos','World']));
+console.log("\n");
+console.log(transposeTwoStrings(['Hello','Worlds']));
+
+////////////////////////////////////////////////////////////////////
+
+/*
+Is one string a rotated version of another?
+
+For example:
+String 1: 'hello world'
+String 2: 'orldhello w'
+
+If you double the string, you'll be able to find another string inside the doubled string using familiar String methods.
+
+Doubled string: 'hello worldhello world'
+Search w/in it: '       orldhello w    '
+*/
+
+function isRotated(str1, str2) {
+  // repeat str1;
+  let doubled = str1 + str1;
+  // indexof
+  let index = doubled.indexOf(str2);
+  // if present return true
+  if (index !== -1) {
+    return true;
+  // otherwise 
+  } else {
+    // return false 
+    return false;
+  }
+}
+
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed');
+  } else{
+    console.log(`FAILED [${testName}], Expected "${expected}", but got "${actual}"`);
+  }
+}
+
+
+let str1A = "hello world"
+let str2A = "orldhello w";
+let testP = isRotated(str1A, str2A);
+assertEquals(testP, true, 'test if str2 is a rotated version of str1');
+
+let str1B = 'gotDamn';
+let str2B = 'hellNo';
+let testF = isRotated(str1B, str2B);
+assertEquals(testF, false, 'test if str2 is a rotated version of str1');
+
+//////////////////////////////////////////END//////////////////////////////////////////////////////
