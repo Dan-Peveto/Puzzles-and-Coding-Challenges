@@ -1,0 +1,254 @@
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function average(numbers) {
+  // uses sum function
+  let sums = sum(numbers)
+  // returns the average of an array of numbers
+  return sums / numbers.length;
+}
+
+function sum(numbers) {
+  // returns the sum of an array of numbers
+  // create sum var
+  let sum = 0;
+  // iterate over input array
+  for (var i = 0; i < numbers.length; i++) {
+    // += sum and elements 
+    let ele = numbers[i];
+    sum += ele;
+  }
+  // return sum;
+  return sum;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed');
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+// TESTS CASES
+let testArr = [2, 4, 6];
+assertEquals(sum(testArr), 12, 'Sums numbers in Array');
+assertEquals(average(testArr), 4, 'Averages numbers in Array');
+
+///////////////////////////////////////////////////////////////
+
+// FUNCTION DEFINITION(S)
+// Sample Input
+var classList = ["Joe", "Jack", "John", "Fred", "Frank", "Barry", "Larry", "Mary",
+"Harry", "Farrell", "Susan", "Monica", "Keira", "Caroline", "Harriet", "Erica",
+"Luann", "Cheryl", "Beth", "Rupa", "Linda", "Allison", "Nancy", "Dora"];
+
+// Sample Output
+var classListWithAges = [{"name":"Joe","age":11},{"name":"Jack","age":10},
+{"name":"John","age":11},{"name":"Fred","age":11},{"name":"Frank","age":11},
+{"name":"Barry","age":11},{"name":"Larry","age":11},{"name":"Mary","age":11},
+{"name":"Harry","age":11},{"name":"Farrell","age":10},{"name":"Susan","age":10},
+{"name":"Monica","age":11},{"name":"Keira","age":10},{"name":"Caroline","age":10},
+{"name":"Harriet","age":11},{"name":"Erica","age":11},{"name":"Luann","age":10},
+{"name":"Cheryl","age":11},{"name":"Beth","age":10},{"name":"Rupa","age":11},
+{"name":"Linda","age":10},{"name":"Allison","age":10},{"name":"Nancy","age":10},
+{"name":"Dora","age":10}]
+// USE THIS FUNCTION TO GENERATE A RANDOM NUMBER
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function decorateClassListWithAges(classList) {
+  // creates an object for each string in the input array, with an age of 10 or 11
+  let classArr = [];
+  for (var i = 0; i < classList.length; i++) {
+    let classObj = {
+      name: classList[i],
+      age: getRandomIntInclusive(10, 11)
+    };
+    classArr.push(classObj);
+  }
+  // returns an array of these objects
+  return classArr;
+  
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertionWithinRange(low, high, actual, testName) {
+  if (actual >= low && actual <= high) {
+    console.log('passed');
+  } else {
+    console.log('FAILED [' +testName+ '] ' +actual+ 'not within range of ' +low+ ' to ' +high)
+  }
+}
+// TESTS CASES
+var classList = ["Joe", "Jack", "John", "Fred", "Frank"];
+
+let testClassList = decorateClassListWithAges(classList);
+for (var i = 0; i < testClassList.length; i++) {
+  assertionWithinRange(10, 11, testClassList[i].age, 'Decorates Class List ages between 10 and 11');
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function isIsogram(text) {
+  // add each char to a set
+  let sText = text.toLowerCase();
+  let isoSet = new Set(sText); 
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+  // note: a set drops dup values
+  // thus, to see if all the chars were unique,
+  // check length of text and the size of the set
+  return isoSet.size === text.length;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed');
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+// TESTS CASES
+let isoP = isIsogram('isogram');
+let isoF = isIsogram('beeb');
+assertEquals(isoP, true, 'return whether input text is isogram');
+assertEquals(isoF, false, 'return whether input text is isogram');
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function findMaxRepeatCountInWord(word) {
+  // Break up individual words into individual letters.
+  let letters = word.split('');
+  
+  // Count the instances of each letter
+  let countObj = {};
+  for (var i = 0; i < letters.length; i++) {
+    let ele = letters[i];
+    if (countObj[ele] === undefined) {
+      countObj[ele] = 1
+    } else {
+      countObj[ele]++
+    }
+  }
+  // Iterate all the counts and find the highest
+  let comp = -Infinity;
+  let finalCount = 0;
+  for (var key in countObj) {
+    if (countObj[key] > comp) {
+      comp = countObj[key];
+      finalCount = countObj[key];
+    }
+  }
+  // Return this word's max repeat count
+  return finalCount;
+}
+
+function findFirstWordWithMostRepeatedChars(text) {
+  var maxRepeatCountOverall = 0;
+  var wordWithMaxRepeatCount = '';
+
+  // Break up input text into words (space-delimited).
+  let words = text.split(' ');
+  // For each word...
+  for (var i = 0; i < words.length; i++) {
+    var repeatCountForWord = findMaxRepeatCountInWord(words[i]);
+    // If that max repeat count is higher than the overall max repeat count, then
+    if (repeatCountForWord > maxRepeatCountOverall) {
+      // update maxRepeatCountOverall
+      maxRepeatCountOverall = repeatCountForWord
+      // update wordWithMaxRepeatCount  
+      wordWithMaxRepeatCount = words[i];
+    }
+  }
+  return wordWithMaxRepeatCount;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed'); 
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+
+// TESTS CASES
+let testWord = 'booob';
+let testWordFunc = findMaxRepeatCountInWord(testWord);
+let text = 'When I was one and twenty I heard a wise man say'
+let testTextFunc = findFirstWordWithMostRepeatedChars(text);
+assertEquals(testWordFunc, 3, 'Returns words max repeat character count');
+assertEquals(testTextFunc, 'twenty', 'returns first word with most repeat characters');
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function findLongestPalindrome(sentence) {
+  // split sentence into words
+  let words = sentence.split(' ');
+  // iterate words and collect the palindromes
+  let palArr = [];
+  for (var i = 0; i < words.length; i++) {
+    if (isPalindrome(words[i])) {
+      palArr.push(words[i]);
+    }
+  }
+  // sort the list of palindromes by word length
+  
+  let sorted = palArr.sort(sortAscendingByLength);
+  // return the largest item in the sorted list
+  let longestPal = sorted.pop();
+  return longestPal;
+}
+
+
+function reverseString(string) {
+  let reversed = ''
+    for (var i = string.length-1; i >= 0; i--) {
+      reversed = reversed += string[i];
+    }
+  return reversed
+}
+
+function isPalindrome(word) {
+  // hint: you can detect palindromes by comparing a string to its reverse
+  let reversed = reverseString(word);
+  return word === reversed
+}
+
+function sortAscendingByLength(a, b) {
+  if (a.length > b.length) {
+    return 1;
+  } else if (a.length < b.length) {
+    return -1;
+  }
+  return 0;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEquals(actual, expected, testName) {
+  if (actual === expected) {
+    console.log('passed');
+  } else {
+    console.log('FAILED [' +testName+ '], Expected "' +expected+ '", but got "' +actual+ '"');
+  }
+}
+// TESTS CASES
+let palSent = 'dood and doooooood and toot and tooot';
+let palTest = findLongestPalindrome(palSent);
+assertEquals(palTest, 'doooooood', 'Test for longest Palindrome from input string')
+
+////////////////////////////////////END//////////////////////////////////////////////////
+
